@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+
+<h2 class="mb-4 text-center">Messages</h2>
+
+<!-- Search Bar -->
+<form method="get" class="d-flex mb-3">
+    <input type="text" name="q" class="form-control me-2" placeholder="Search messages..." value="{{ search_query }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<!-- Message List -->
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for msg in page_obj %}
+            <tr>
+                <td>{{ msg.username }}</td>
+                <td>{{ msg.email }}</td>
+                <td>{{ msg.message }}</td>
+                <td>{{ msg.created_at }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4" class="text-center">No messages found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination Controls -->
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}">Previous</a>
+            </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ search_query }}">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}

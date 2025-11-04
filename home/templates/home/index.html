@@ -1,0 +1,61 @@
+{% extends 'home/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<body class="bg-light">
+<h2 class="text-center m-2">Submit Your Message</h2>
+    <div class="container mt-5">
+        <div class="card shadow p-4 rounded-4">
+            <h2 class="text-center mb-4">📩 Contact Form</h2>
+
+            <!-- Success Message -->
+            {% if success %}
+            <div class="alert alert-success" role="alert">
+                Your message has been submitted successfully!
+            </div>
+            {% endif %}
+
+            <!-- Django Form -->
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="text-danger small">
+                            {{ form.username.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="text-danger small">
+                            {{ form.email.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.message.label_tag }}
+                    {{ form.message }}
+                    {% if form.message.errors %}
+                        <div class="text-danger small">
+                            {{ form.message.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+</body>
+{% endblock %}
